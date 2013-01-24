@@ -1,6 +1,7 @@
 package com.github.uthark.readability.api;
 
 import com.github.uthark.readability.AbstractReadabilityTest;
+import com.github.uthark.readability.api.impl.ShortenerServiceImpl;
 import com.github.uthark.readability.model.ShortenerResponse;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;

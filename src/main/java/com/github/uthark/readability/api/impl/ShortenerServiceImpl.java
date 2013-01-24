@@ -1,5 +1,6 @@
-package com.github.uthark.readability.api;
+package com.github.uthark.readability.api.impl;
 
+import com.github.uthark.readability.api.ShortenerService;
 import com.github.uthark.readability.model.ShortenerResponse;
 import com.github.uthark.readability.parser.ResponseParser;
 import com.github.uthark.readability.xauth.OAuthRequest;
