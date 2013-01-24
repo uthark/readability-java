@@ -42,7 +42,7 @@ public class TagServiceImpl implements TagService {
     public Tag getTag(Long tagId) throws IOException {
         OAuthRequest request = new OAuthRequest(Verb.GET, buildUrl(tagId));
         Response response = readability.executeRequest(request);
-        if (response.getCode() != HttpCode.HTTP_CODE_OK) {
+        if (response.getCode() != HttpCode.OK) {
             throw new ReadabilityException(response.getCode(), response.getBody());
         }
         String body = response.getBody();
@@ -57,7 +57,7 @@ public class TagServiceImpl implements TagService {
     public void deleteTag(Long tagId) {
         OAuthRequest request = new OAuthRequest(Verb.DELETE, buildUrl(tagId));
         Response response = readability.executeRequest(request);
-        if (response.getCode() != HttpCode.HTTP_CODE_NO_CONTENT) {
+        if (response.getCode() != HttpCode.NO_CONTENT) {
             throw new ReadabilityException(response.getCode(), response.getBody());
         }
     }

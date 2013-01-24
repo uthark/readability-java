@@ -6,10 +6,10 @@ package com.github.uthark.readability.api.impl;
  */
 public interface HttpCode {
 
-    int HTTP_CODE_OK = 200;
-    int HTTP_CODE_ACCEPTED = 202;
-    int HTTP_CODE_NO_CONTENT = 204;
-    int HTTP_CODE_NOT_FOUND = 404;
-    int HTTP_CODE_CONFLICT = 409;
+    int OK = 200;
+    int ACCEPTED = 202;
+    int NO_CONTENT = 204;
+    int NOT_FOUND = 404;
+    int CONFLICT = 409;
 
 }
