@@ -1,6 +1,7 @@
 package com.github.uthark.readability.api.impl;
 
 import com.github.uthark.readability.AbstractReadabilityTest;
+import com.github.uthark.readability.ReadabilityException;
 import com.github.uthark.readability.api.BookmarksService;
 import com.github.uthark.readability.model.AddBookmarkResponse;
 import com.github.uthark.readability.model.Bookmark;
@@ -47,8 +48,21 @@ public class BookmarksServiceImplTest extends AbstractReadabilityTest {
     @Test
     public void testGetBookmark() throws Exception {
         AddBookmarkResponse response =
-                bookmarksService.addBookmark("http://habrahabr.ru/post/166413/#comment_5752005", false, false);
+                bookmarksService.addBookmark("http://en.wikipedia.org/wiki/Readability", false, false);
         Bookmark bookmark = bookmarksService.getBookmark(response.getBookmarkId());
         Assert.assertNotNull(bookmark);
+
+        Bookmark updated = bookmarksService.updateBookmark(bookmark.getId(), true, true, 0.5);
+        Assert.assertTrue(updated.getFavorite());
+        Assert.assertTrue(updated.getArchive());
+        Assert.assertEquals(updated.getReadPercent(), 0.5, 0.01);
+
+        bookmarksService.deleteBookmark(bookmark.getId());
+
+        try {
+            bookmarksService.getBookmark(bookmark.getId());
+        } catch (ReadabilityException e) {
+            Assert.assertEquals(e.getCode(), 404);
+        }
     }
 }

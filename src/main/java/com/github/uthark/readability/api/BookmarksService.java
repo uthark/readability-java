@@ -8,7 +8,7 @@ import com.github.uthark.readability.model.Conditions;
 import java.io.IOException;
 
 /**
- * @author <a href="mailto:oatamanenko@eastbanctech.com">Oleg Atamanenko</a>
+ * @author <a href="mailto:oleg.atamanenko@gmail.com">Oleg Atamanenko</a>
  * @since 1/20/13
  */
 public interface BookmarksService {
@@ -18,4 +18,8 @@ public interface BookmarksService {
     Bookmark getBookmark(Long bookmarkId) throws IOException;
 
     AddBookmarkResponse addBookmark(String url, boolean favorite, boolean archive) throws IOException;
+
+    void deleteBookmark(Long bookmarkId) throws IOException;
+
+    Bookmark updateBookmark(Long bookmarkId, boolean favorite, boolean archive, double readPercent) throws IOException;
 }

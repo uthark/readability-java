@@ -64,4 +64,108 @@ public class Bookmark {
     public void setUnknownProperty(String key, Object value) {
         LOGGER.warn("Setting unknown {}={}", key, value);
     }
+
+    public Article getArticle() {
+        return article;
+    }
+
+    public void setArticle(Article article) {
+        this.article = article;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Double getReadPercent() {
+        return readPercent;
+    }
+
+    public void setReadPercent(Double readPercent) {
+        this.readPercent = readPercent;
+    }
+
+    public String[] getTags() {
+        return tags;
+    }
+
+    public void setTags(String[] tags) {
+        this.tags = tags;
+    }
+
+    public Date getDateUpdated() {
+        return dateUpdated;
+    }
+
+    public void setDateUpdated(Date dateUpdated) {
+        this.dateUpdated = dateUpdated;
+    }
+
+    public Boolean getFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(Boolean favorite) {
+        this.favorite = favorite;
+    }
+
+    public Boolean getArchive() {
+        return archive;
+    }
+
+    public void setArchive(Boolean archive) {
+        this.archive = archive;
+    }
+
+    public Date getDateFavorited() {
+        return dateFavorited;
+    }
+
+    public void setDateFavorited(Date dateFavorited) {
+        this.dateFavorited = dateFavorited;
+    }
+
+    public Date getDateAdded() {
+        return dateAdded;
+    }
+
+    public void setDateAdded(Date dateAdded) {
+        this.dateAdded = dateAdded;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Date getDateArchived() {
+        return dateArchived;
+    }
+
+    public void setDateArchived(Date dateArchived) {
+        this.dateArchived = dateArchived;
+    }
+
+    public Date getDateOpened() {
+        return dateOpened;
+    }
+
+    public void setDateOpened(Date dateOpened) {
+        this.dateOpened = dateOpened;
+    }
+
+    public String getArticleHref() {
+        return articleHref;
+    }
+
+    public void setArticleHref(String articleHref) {
+        this.articleHref = articleHref;
+    }
 }

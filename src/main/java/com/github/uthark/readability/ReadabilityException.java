@@ -22,4 +22,9 @@ public class ReadabilityException extends RuntimeException {
     public int getCode() {
         return code;
     }
+
+    @Override
+    public String getMessage() {
+        return String.valueOf(code) + " " + response;
+    }
 }
