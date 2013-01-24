@@ -1,5 +1,6 @@
 package com.github.uthark.readability.api.impl;
 
+import com.github.uthark.readability.ReadabilityException;
 import com.github.uthark.readability.api.ShortenerService;
 import com.github.uthark.readability.model.ShortenerResponse;
 import com.github.uthark.readability.parser.ResponseParser;
@@ -35,6 +36,7 @@ public class ShortenerServiceImpl implements ShortenerService {
 
         Response response = readability.executeRequest(request);
 
+
         String body = response.getBody();
         StringReader reader = new StringReader(body);
         return responseParser.parse(reader, ShortenerResponse.class);
@@ -45,6 +47,13 @@ public class ShortenerServiceImpl implements ShortenerService {
         OAuthRequest request = new OAuthRequest(Verb.GET, SHORTENER_URL + '/' + articleId);
 
         Response response = readability.executeRequest(request);
+
+        if (response.getCode() == HttpCode.BAD_REQUEST) {
+            throw new ReadabilityException(response.getCode(), "Invalid request. Article id is invalid: " + articleId);
+        }
+        if (response.getCode() != HttpCode.OK) {
+            throw new ReadabilityException(response.getCode(), response.getBody());
+        }
 
         String body = response.getBody();
         StringReader reader = new StringReader(body);

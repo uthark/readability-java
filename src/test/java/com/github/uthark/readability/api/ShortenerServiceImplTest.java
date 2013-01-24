@@ -1,6 +1,7 @@
 package com.github.uthark.readability.api;
 
 import com.github.uthark.readability.AbstractReadabilityTest;
+import com.github.uthark.readability.ReadabilityException;
 import com.github.uthark.readability.api.impl.ShortenerServiceImpl;
 import com.github.uthark.readability.model.ShortenerResponse;
 import org.testng.Assert;
@@ -36,5 +37,10 @@ public class ShortenerServiceImplTest extends AbstractReadabilityTest {
         Assert.assertNotNull(details);
 
         Assert.assertNotNull(details.getMeta().getArticle());
+    }
+
+    @Test(expectedExceptions = ReadabilityException.class)
+    public void testGetUnknown() throws Exception {
+        shortenerService.getDetails("unknown article id");
     }
 }
