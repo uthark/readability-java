@@ -4,6 +4,7 @@ import com.github.uthark.readability.model.AddBookmarkResponse;
 import com.github.uthark.readability.model.Bookmark;
 import com.github.uthark.readability.model.BookmarksResponse;
 import com.github.uthark.readability.model.Conditions;
+import com.github.uthark.readability.model.TagsResponse;
 
 import java.io.IOException;
 
@@ -22,4 +23,10 @@ public interface BookmarksService {
     void deleteBookmark(Long bookmarkId) throws IOException;
 
     Bookmark updateBookmark(Long bookmarkId, boolean favorite, boolean archive, double readPercent) throws IOException;
+
+    TagsResponse getTags(Long bookmarkId) throws IOException;
+
+    TagsResponse addTags(Long bookmarkId, String... newTags) throws IOException;
+
+    void removeTag(Long bookmarkId, Long tagId) throws IOException;
 }

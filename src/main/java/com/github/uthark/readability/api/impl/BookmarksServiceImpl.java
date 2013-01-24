@@ -6,6 +6,7 @@ import com.github.uthark.readability.model.AddBookmarkResponse;
 import com.github.uthark.readability.model.Bookmark;
 import com.github.uthark.readability.model.BookmarksResponse;
 import com.github.uthark.readability.model.Conditions;
+import com.github.uthark.readability.model.TagsResponse;
 import com.github.uthark.readability.parser.ResponseParser;
 import com.github.uthark.readability.xauth.OAuthRequest;
 import com.github.uthark.readability.xauth.Readability;
@@ -131,5 +132,46 @@ public class BookmarksServiceImpl implements BookmarksService {
         String responseBody = response.getBody();
 
         return responseParser.parse(new StringReader(responseBody), Bookmark.class);
+    }
+
+    @Override
+    public TagsResponse getTags(Long bookmarkId) throws IOException {
+        OAuthRequest request = new OAuthRequest(Verb.GET, BOOKMARKS_URL + '/' + bookmarkId + "/tags");
+        Response response = readability.executeRequest(request);
+
+        String body = response.getBody();
+        return responseParser.parse(new StringReader(body), TagsResponse.class);
+    }
+
+    @Override
+    public TagsResponse addTags(Long bookmarkId, String... newTags) throws IOException {
+        OAuthRequest request = new OAuthRequest(Verb.POST, BOOKMARKS_URL + '/' + bookmarkId + "/tags");
+        request.addBodyParameter("tags", join(newTags));
+        Response response = readability.executeRequest(request);
+
+        String body = response.getBody();
+        return responseParser.parse(new StringReader(body), TagsResponse.class);
+    }
+
+    @Override
+    public void removeTag(Long bookmarkId, Long tagId) throws IOException {
+        OAuthRequest request = new OAuthRequest(Verb.DELETE, BOOKMARKS_URL + '/' + bookmarkId + "/tags/" + tagId);
+        Response response = readability.executeRequest(request);
+        if (response.getCode() != HttpCode.HTTP_CODE_NO_CONTENT) {
+            throw new ReadabilityException(response.getCode(), response.getBody());
+        }
+    }
+
+    private String join(String... newTags) {
+        StringBuilder result = new StringBuilder();
+        for (String newTag : newTags) {
+            result.append(newTag);
+            result.append(",");
+        }
+        // remove last comma.
+        if (result.length() > 0) {
+            result.setLength(result.length() - 1);
+        }
+        return result.toString();
     }
 }

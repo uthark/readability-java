@@ -7,6 +7,8 @@ import com.github.uthark.readability.model.AddBookmarkResponse;
 import com.github.uthark.readability.model.Bookmark;
 import com.github.uthark.readability.model.BookmarksResponse;
 import com.github.uthark.readability.model.Conditions;
+import com.github.uthark.readability.model.Tag;
+import com.github.uthark.readability.model.TagsResponse;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -66,5 +68,33 @@ public class BookmarksServiceImplTest extends AbstractReadabilityTest {
         } catch (ReadabilityException e) {
             Assert.assertEquals(e.getCode(), 404);
         }
+    }
+
+    @Test
+    public void testTags() throws Exception {
+        AddBookmarkResponse response =
+                bookmarksService.addBookmark("http://en.wikipedia.org/wiki/Rova_of_Antananarivo", false, false);
+
+        if (null == response.getArticleLocation()) {
+            bookmarksService.deleteBookmark(response.getBookmarkId());
+            response =
+                    bookmarksService.addBookmark("http://en.wikipedia.org/wiki/Rova_of_Antananarivo", false, false);
+        }
+
+        TagsResponse tags1 = bookmarksService.addTags(response.getBookmarkId(), "my tag 1", "my tag 2", "my tag 3");
+
+        Assert.assertNotNull(tags1);
+        Assert.assertEquals(tags1.getTags().size(), 3);
+
+        TagsResponse tags2 = bookmarksService.addTags(response.getBookmarkId(), "my tag 3", "new tag");
+        Assert.assertEquals(tags2.getTags().size(), 1);
+
+        TagsResponse toDelete = bookmarksService.getTags(response.getBookmarkId());
+
+        for (Tag tag : toDelete) {
+            bookmarksService.removeTag(response.getBookmarkId(), tag.getId());
+        }
+
+
     }
 }
