@@ -22,7 +22,7 @@ public class BookmarksResponse {
     private Meta meta;
 
     @JsonProperty("conditions")
-    private Conditions conditions;
+    private BookmarkFilter bookmarkFilter;
 
     @JsonAnySetter()
     public void setUnknownProperty(String key, Object value) {
@@ -45,11 +45,11 @@ public class BookmarksResponse {
         this.bookmarks = bookmarks;
     }
 
-    public Conditions getConditions() {
-        return conditions;
+    public BookmarkFilter getBookmarkFilter() {
+        return bookmarkFilter;
     }
 
-    public void setConditions(Conditions conditions) {
-        this.conditions = conditions;
+    public void setBookmarkFilter(BookmarkFilter bookmarkFilter) {
+        this.bookmarkFilter = bookmarkFilter;
     }
 }

@@ -9,9 +9,9 @@ import org.slf4j.LoggerFactory;
  * @author <a href="mailto:oatamanenko@eastbanctech.com">Oleg Atamanenko</a>
  * @since 1/20/13
  */
-public class Conditions {
+public class BookmarkFilter {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(Conditions.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BookmarkFilter.class);
 
     @JsonProperty("opened_since")
     private String openedSince;

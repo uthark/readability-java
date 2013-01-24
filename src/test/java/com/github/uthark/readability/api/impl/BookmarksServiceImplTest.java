@@ -5,8 +5,8 @@ import com.github.uthark.readability.ReadabilityException;
 import com.github.uthark.readability.api.BookmarksService;
 import com.github.uthark.readability.model.AddBookmarkResponse;
 import com.github.uthark.readability.model.Bookmark;
+import com.github.uthark.readability.model.BookmarkFilter;
 import com.github.uthark.readability.model.BookmarksResponse;
-import com.github.uthark.readability.model.Conditions;
 import com.github.uthark.readability.model.Tag;
 import com.github.uthark.readability.model.TagsResponse;
 import org.testng.Assert;
@@ -36,7 +36,7 @@ public class BookmarksServiceImplTest extends AbstractReadabilityTest {
     @Test
     public void testGetBookmarks() throws Exception {
 
-        BookmarksResponse bookmarksResponse = bookmarksService.getBookmarks(new Conditions());
+        BookmarksResponse bookmarksResponse = bookmarksService.getBookmarks(new BookmarkFilter());
 
         Assert.assertNotNull(bookmarksResponse);
     }

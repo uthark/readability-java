@@ -4,8 +4,8 @@ import com.github.uthark.readability.ReadabilityException;
 import com.github.uthark.readability.api.BookmarksService;
 import com.github.uthark.readability.model.AddBookmarkResponse;
 import com.github.uthark.readability.model.Bookmark;
+import com.github.uthark.readability.model.BookmarkFilter;
 import com.github.uthark.readability.model.BookmarksResponse;
-import com.github.uthark.readability.model.Conditions;
 import com.github.uthark.readability.model.TagsResponse;
 import com.github.uthark.readability.parser.ResponseParser;
 import com.github.uthark.readability.xauth.OAuthRequest;
@@ -45,7 +45,7 @@ public class BookmarksServiceImpl implements BookmarksService {
     }
 
     @Override
-    public BookmarksResponse getBookmarks(Conditions conditions) throws IOException {
+    public BookmarksResponse getBookmarks(BookmarkFilter bookmarkFilter) throws IOException {
         OAuthRequest request = new OAuthRequest(Verb.GET, BOOKMARKS_URL);
         Response response = readability.executeRequest(request);
         String responseBody = response.getBody();

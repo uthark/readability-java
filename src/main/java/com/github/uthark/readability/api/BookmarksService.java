@@ -2,8 +2,8 @@ package com.github.uthark.readability.api;
 
 import com.github.uthark.readability.model.AddBookmarkResponse;
 import com.github.uthark.readability.model.Bookmark;
+import com.github.uthark.readability.model.BookmarkFilter;
 import com.github.uthark.readability.model.BookmarksResponse;
-import com.github.uthark.readability.model.Conditions;
 import com.github.uthark.readability.model.TagsResponse;
 
 import java.io.IOException;
@@ -14,7 +14,7 @@ import java.io.IOException;
  */
 public interface BookmarksService {
 
-    BookmarksResponse getBookmarks(Conditions conditions) throws IOException;
+    BookmarksResponse getBookmarks(BookmarkFilter bookmarkFilter) throws IOException;
 
     Bookmark getBookmark(Long bookmarkId) throws IOException;
 
