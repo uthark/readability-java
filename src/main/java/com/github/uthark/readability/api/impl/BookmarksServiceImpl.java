@@ -21,8 +21,6 @@ import java.io.StringReader;
  */
 public class BookmarksServiceImpl implements BookmarksService {
 
-    public static final int HTTP_CODE_ACCEPTED = 202;
-
     public static final String HEADER_LOCATION = "Location";
 
     public static final String HEADER_ARTICLE_LOCATION = "X-Article-Location";
@@ -36,14 +34,6 @@ public class BookmarksServiceImpl implements BookmarksService {
     public static final String PARAM_READ_PERCENT = "read_percent";
 
     private static final String BOOKMARKS_URL = "https://www.readability.com/api/rest/v1/bookmarks";
-
-    private static final int HTTP_CODE_NO_CONTENT = 204;
-
-    private static final int HTTP_CODE_OK = 200;
-
-    private static final int HTTP_CODE_CONFLICT = 409;
-
-    private static final int HTTP_CODE_NOT_FOUND = 404;
 
     private Readability readability;
 
@@ -67,7 +57,7 @@ public class BookmarksServiceImpl implements BookmarksService {
         OAuthRequest request = new OAuthRequest(Verb.GET, buildUrl(bookmarkId));
         Response response = readability.executeRequest(request);
 
-        if (response.getCode() == HTTP_CODE_NOT_FOUND) {
+        if (response.getCode() == HttpCode.HTTP_CODE_NOT_FOUND) {
             throw new ReadabilityException(response.getCode(), "Bookmark with id=" + bookmarkId + " was not found");
         }
 
@@ -92,13 +82,13 @@ public class BookmarksServiceImpl implements BookmarksService {
         request.addBodyParameter(PARAM_ARCHIVE, toString(archive));
         Response response = readability.executeRequest(request);
 
-        if (response.getCode() == HTTP_CODE_ACCEPTED) {
+        if (response.getCode() == HttpCode.HTTP_CODE_ACCEPTED) {
             String bookmarkLocation = response.getHeader(HEADER_LOCATION);
             String articleLocation = response.getHeader(HEADER_ARTICLE_LOCATION);
 
             return new AddBookmarkResponse(bookmarkLocation, articleLocation);
 
-        } else if (response.getCode() == HTTP_CODE_CONFLICT) {
+        } else if (response.getCode() == HttpCode.HTTP_CODE_CONFLICT) {
             String bookmarkLocation = response.getHeader(HEADER_LOCATION);
             return new AddBookmarkResponse(bookmarkLocation, null);
         } else {
@@ -116,7 +106,7 @@ public class BookmarksServiceImpl implements BookmarksService {
     public void deleteBookmark(Long bookmarkId) throws IOException {
         OAuthRequest request = new OAuthRequest(Verb.DELETE, buildUrl(bookmarkId));
         Response response = readability.executeRequest(request);
-        if (response.getCode() != HTTP_CODE_NO_CONTENT) {
+        if (response.getCode() != HttpCode.HTTP_CODE_NO_CONTENT) {
             throw new ReadabilityException(response.getCode(), "Unable to delete bookmark with id=" + bookmarkId);
         }
     }
@@ -134,7 +124,7 @@ public class BookmarksServiceImpl implements BookmarksService {
 
         Response response = readability.executeRequest(request);
 
-        if (response.getCode() != HTTP_CODE_OK) {
+        if (response.getCode() != HttpCode.HTTP_CODE_OK) {
             throw new ReadabilityException(response.getCode(), "Unable to update bookmark with id=" + bookmarkId);
         }
 

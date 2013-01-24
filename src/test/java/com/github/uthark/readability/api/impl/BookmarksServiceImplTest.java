@@ -43,6 +43,8 @@ public class BookmarksServiceImplTest extends AbstractReadabilityTest {
     public void testAddBookmark() throws Exception {
         AddBookmarkResponse response = bookmarksService.addBookmark("http://habrahabr.ru/post/166291/", false, false);
         Assert.assertNotNull(response);
+
+        bookmarksService.deleteBookmark(response.getBookmarkId());
     }
 
     @Test

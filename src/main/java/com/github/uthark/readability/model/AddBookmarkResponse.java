@@ -17,6 +17,8 @@ public class AddBookmarkResponse {
 
     private Long bookmarkId;
 
+    private String articleId;
+
     public AddBookmarkResponse(String bookmarkLocation, String articleLocation) {
 
         this.bookmarkLocation = bookmarkLocation;
@@ -37,5 +39,13 @@ public class AddBookmarkResponse {
             bookmarkId = Long.valueOf(bookmarkLocation.substring(i + 1));
         }
         return bookmarkId;
+    }
+
+    public String getArticleId() {
+        if (null == articleId) {
+            int i = articleLocation.lastIndexOf('/');
+            articleId = articleLocation.substring(i + 1);
+        }
+        return articleId;
     }
 }

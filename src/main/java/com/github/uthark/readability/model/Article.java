@@ -53,6 +53,18 @@ public class Article {
     @JsonProperty("processed")
     private Boolean processed;
 
+    @JsonProperty("content_size")
+    private Long contentSize;
+
+    @JsonProperty("short_url")
+    private String shortUrl;
+
+    @JsonProperty("content")
+    private String content;
+
+    @JsonProperty("next_page_href")
+    private String nextPageHref;
+
     @JsonAnySetter()
     public void setUnknownProperty(String key, Object value) {
         LOGGER.warn("Setting unknown {}={}", key, value);
