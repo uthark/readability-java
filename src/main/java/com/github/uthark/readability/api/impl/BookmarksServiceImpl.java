@@ -12,6 +12,8 @@ import com.github.uthark.readability.xauth.OAuthRequest;
 import com.github.uthark.readability.xauth.Readability;
 import org.scribe.model.Response;
 import org.scribe.model.Verb;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -36,6 +38,8 @@ public class BookmarksServiceImpl implements BookmarksService {
 
     private static final String BOOKMARKS_URL = "https://www.readability.com/api/rest/v1/bookmarks";
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(BookmarksServiceImpl.class);
+
     private Readability readability;
 
     private ResponseParser responseParser = new ResponseParser();
@@ -47,11 +51,27 @@ public class BookmarksServiceImpl implements BookmarksService {
     @Override
     public BookmarksResponse getBookmarks(BookmarkFilter bookmarkFilter) throws IOException {
         OAuthRequest request = new OAuthRequest(Verb.GET, BOOKMARKS_URL);
+
+        request.addQuerystringParameter("archive", toIntegerStr(bookmarkFilter.getArchive()));
+        request.addQuerystringParameter("favorite", toIntegerStr(bookmarkFilter.getFavorite()));
+        request.addQuerystringParameter("only_deleted", toIntegerStr(bookmarkFilter.getOnlyDeleted()));
+
         Response response = readability.executeRequest(request);
+
+        if (response.getCode() == HttpCode.UNAUTHORIZED) {
+            throw new ReadabilityException(response.getCode(), response.getBody());
+        }
+
         String responseBody = response.getBody();
+
+        LOGGER.debug("Response is: {}", responseBody);
 
         StringReader reader = new StringReader(responseBody);
         return responseParser.parse(reader, BookmarksResponse.class);
+    }
+
+    private String toIntegerStr(Boolean toConvert) {
+        return (toConvert == null || !toConvert) ? "0" : "1";
     }
 
     public Bookmark getBookmark(Long bookmarkId) throws IOException {

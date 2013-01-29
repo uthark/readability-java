@@ -36,7 +36,9 @@ public class BookmarksServiceImplTest extends AbstractReadabilityTest {
     @Test
     public void testGetBookmarks() throws Exception {
 
-        BookmarksResponse bookmarksResponse = bookmarksService.getBookmarks(new BookmarkFilter());
+        BookmarkFilter bookmarkFilter = new BookmarkFilter();
+        bookmarkFilter.setArchive(true);
+        BookmarksResponse bookmarksResponse = bookmarksService.getBookmarks(bookmarkFilter);
 
         Assert.assertNotNull(bookmarksResponse);
     }

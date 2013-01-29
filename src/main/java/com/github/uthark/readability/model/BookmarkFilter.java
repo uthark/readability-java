@@ -29,13 +29,13 @@ public class BookmarkFilter {
     private String[] tags;
 
     @JsonProperty("archive")
-    private String archive;
+    private Boolean archive;
 
     @JsonProperty("archived_until")
     private String archivedUntil;
 
     @JsonProperty("favorite")
-    private String favorite;
+    private Boolean favorite;
 
     @JsonProperty("favorited_since")
     private String favoritedSince;
@@ -62,7 +62,7 @@ public class BookmarkFilter {
     private String addedSince;
 
     @JsonProperty("only_deleted")
-    private String onlyDeleted;
+    private Boolean onlyDeleted;
 
     @JsonProperty("order")
     private String order;
@@ -118,11 +118,11 @@ public class BookmarkFilter {
         this.tags = tags;
     }
 
-    public String getArchive() {
+    public Boolean getArchive() {
         return archive;
     }
 
-    public void setArchive(String archive) {
+    public void setArchive(Boolean archive) {
         this.archive = archive;
     }
 
@@ -134,11 +134,11 @@ public class BookmarkFilter {
         this.archivedUntil = archivedUntil;
     }
 
-    public String getFavorite() {
+    public Boolean getFavorite() {
         return favorite;
     }
 
-    public void setFavorite(String favorite) {
+    public void setFavorite(Boolean favorite) {
         this.favorite = favorite;
     }
 
@@ -206,11 +206,11 @@ public class BookmarkFilter {
         this.addedSince = addedSince;
     }
 
-    public String getOnlyDeleted() {
+    public Boolean getOnlyDeleted() {
         return onlyDeleted;
     }
 
-    public void setOnlyDeleted(String onlyDeleted) {
+    public void setOnlyDeleted(Boolean onlyDeleted) {
         this.onlyDeleted = onlyDeleted;
     }
 
@@ -237,4 +237,5 @@ public class BookmarkFilter {
     public void setUpdatedSince(String updatedSince) {
         this.updatedSince = updatedSince;
     }
+
 }
