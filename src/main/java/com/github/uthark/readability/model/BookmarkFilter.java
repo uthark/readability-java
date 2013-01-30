@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Date;
+
 /**
  * @author <a href="mailto:oatamanenko@eastbanctech.com">Oleg Atamanenko</a>
  * @since 1/20/13
@@ -13,41 +15,47 @@ public class BookmarkFilter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BookmarkFilter.class);
 
-    @JsonProperty("opened_since")
-    private String openedSince;
-
-    @JsonProperty("added_until")
-    private String addedUntil;
-
     @JsonProperty("domain")
     private String domain;
-
-    @JsonProperty("updated_until")
-    private String updatedUntil;
-
-    @JsonProperty("tags")
-    private String[] tags;
 
     @JsonProperty("archive")
     private Boolean archive;
 
+    @JsonProperty("archived_since")
+    private Date archivedSince;
+
     @JsonProperty("archived_until")
-    private String archivedUntil;
+    private Date archivedUntil;
 
     @JsonProperty("favorite")
     private Boolean favorite;
 
     @JsonProperty("favorited_since")
-    private String favoritedSince;
+    private Date favoritedSince;
 
     @JsonProperty("favorited_until")
-    private String favoritedUntil;
+    private Date favoritedUntil;
+
+    @JsonProperty("tags")
+    private String[] tags;
+
+    @JsonProperty("opened_since")
+    private Date openedSince;
 
     @JsonProperty("opened_until")
-    private String openedUntil;
+    private Date openedUntil;
 
-    @JsonProperty("archived_since")
-    private String archivedSince;
+    @JsonProperty("added_since")
+    private Date addedSince;
+
+    @JsonProperty("added_until")
+    private Date addedUntil;
+
+    @JsonProperty("updated_since")
+    private Date updatedSince;
+
+    @JsonProperty("updated_until")
+    private Date updatedUntil;
 
     @JsonProperty("page")
     private Integer page;
@@ -58,39 +66,35 @@ public class BookmarkFilter {
     @JsonProperty("user")
     private String user;
 
-    @JsonProperty("added_since")
-    private String addedSince;
-
     @JsonProperty("only_deleted")
     private Boolean onlyDeleted;
 
     @JsonProperty("order")
+    // TODO: Convert to enum?
     private String order;
 
     @JsonProperty("exclude_accessibility")
+    @Deprecated
     private String excludeAccessibility;
-
-    @JsonProperty("updated_since")
-    private String updatedSince;
 
     @JsonAnySetter()
     public void setUnknownProperty(String key, Object value) {
         LOGGER.warn("Setting unknown {}={}", key, value);
     }
 
-    public String getOpenedSince() {
+    public Date getOpenedSince() {
         return openedSince;
     }
 
-    public void setOpenedSince(String openedSince) {
+    public void setOpenedSince(Date openedSince) {
         this.openedSince = openedSince;
     }
 
-    public String getAddedUntil() {
+    public Date getAddedUntil() {
         return addedUntil;
     }
 
-    public void setAddedUntil(String addedUntil) {
+    public void setAddedUntil(Date addedUntil) {
         this.addedUntil = addedUntil;
     }
 
@@ -102,11 +106,11 @@ public class BookmarkFilter {
         this.domain = domain;
     }
 
-    public String getUpdatedUntil() {
+    public Date getUpdatedUntil() {
         return updatedUntil;
     }
 
-    public void setUpdatedUntil(String updatedUntil) {
+    public void setUpdatedUntil(Date updatedUntil) {
         this.updatedUntil = updatedUntil;
     }
 
@@ -126,11 +130,11 @@ public class BookmarkFilter {
         this.archive = archive;
     }
 
-    public String getArchivedUntil() {
+    public Date getArchivedUntil() {
         return archivedUntil;
     }
 
-    public void setArchivedUntil(String archivedUntil) {
+    public void setArchivedUntil(Date archivedUntil) {
         this.archivedUntil = archivedUntil;
     }
 
@@ -142,35 +146,35 @@ public class BookmarkFilter {
         this.favorite = favorite;
     }
 
-    public String getFavoritedSince() {
+    public Date getFavoritedSince() {
         return favoritedSince;
     }
 
-    public void setFavoritedSince(String favoritedSince) {
+    public void setFavoritedSince(Date favoritedSince) {
         this.favoritedSince = favoritedSince;
     }
 
-    public String getFavoritedUntil() {
+    public Date getFavoritedUntil() {
         return favoritedUntil;
     }
 
-    public void setFavoritedUntil(String favoritedUntil) {
+    public void setFavoritedUntil(Date favoritedUntil) {
         this.favoritedUntil = favoritedUntil;
     }
 
-    public String getOpenedUntil() {
+    public Date getOpenedUntil() {
         return openedUntil;
     }
 
-    public void setOpenedUntil(String openedUntil) {
+    public void setOpenedUntil(Date openedUntil) {
         this.openedUntil = openedUntil;
     }
 
-    public String getArchivedSince() {
+    public Date getArchivedSince() {
         return archivedSince;
     }
 
-    public void setArchivedSince(String archivedSince) {
+    public void setArchivedSince(Date archivedSince) {
         this.archivedSince = archivedSince;
     }
 
@@ -198,11 +202,11 @@ public class BookmarkFilter {
         this.user = user;
     }
 
-    public String getAddedSince() {
+    public Date getAddedSince() {
         return addedSince;
     }
 
-    public void setAddedSince(String addedSince) {
+    public void setAddedSince(Date addedSince) {
         this.addedSince = addedSince;
     }
 
@@ -222,19 +226,11 @@ public class BookmarkFilter {
         this.order = order;
     }
 
-    public String getExcludeAccessibility() {
-        return excludeAccessibility;
-    }
-
-    public void setExcludeAccessibility(String excludeAccessibility) {
-        this.excludeAccessibility = excludeAccessibility;
-    }
-
-    public String getUpdatedSince() {
+    public Date getUpdatedSince() {
         return updatedSince;
     }
 
-    public void setUpdatedSince(String updatedSince) {
+    public void setUpdatedSince(Date updatedSince) {
         this.updatedSince = updatedSince;
     }
 

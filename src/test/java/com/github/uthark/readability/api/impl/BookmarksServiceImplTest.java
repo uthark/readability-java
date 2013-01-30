@@ -48,6 +48,14 @@ public class BookmarksServiceImplTest extends AbstractReadabilityTest {
         AddBookmarkResponse response = bookmarksService.addBookmark("http://habrahabr.ru/post/166291/", false, false);
         Assert.assertNotNull(response);
 
+        BookmarkFilter bookmarkFilter = new BookmarkFilter();
+        bookmarkFilter.setDomain("habrahabr.ru");
+        bookmarkFilter.setArchive(Boolean.FALSE);
+        BookmarksResponse bookmarks = bookmarksService.getBookmarks(bookmarkFilter);
+        Assert.assertNotNull(bookmarks);
+
+        Assert.assertFalse(bookmarks.getBookmarks().isEmpty());
+
         bookmarksService.deleteBookmark(response.getBookmarkId());
     }
 

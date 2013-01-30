@@ -17,6 +17,9 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @author <a href="mailto:oatamanenko@eastbanctech.com">Oleg Atamanenko</a>
@@ -52,9 +55,29 @@ public class BookmarksServiceImpl implements BookmarksService {
     public BookmarksResponse getBookmarks(BookmarkFilter bookmarkFilter) throws IOException {
         OAuthRequest request = new OAuthRequest(Verb.GET, BOOKMARKS_URL);
 
-        request.addQuerystringParameter("archive", toIntegerStr(bookmarkFilter.getArchive()));
-        request.addQuerystringParameter("favorite", toIntegerStr(bookmarkFilter.getFavorite()));
-        request.addQuerystringParameter("only_deleted", toIntegerStr(bookmarkFilter.getOnlyDeleted()));
+        addParam(request, "archive", toIntegerStr(bookmarkFilter.getArchive()));
+        addParam(request, "favorite", toIntegerStr(bookmarkFilter.getFavorite()));
+        addParam(request, "only_deleted", toIntegerStr(bookmarkFilter.getOnlyDeleted()));
+        addParam(request, "domain", bookmarkFilter.getDomain());
+        addParam(request, "tags", toEncodedString(bookmarkFilter.getTags()));
+        addParam(request, "page", toString(bookmarkFilter.getPage()));
+        addParam(request, "per_page", toString(bookmarkFilter.getPerPage()));
+        addParam(request, "order", bookmarkFilter.getOrder());
+
+        addParam(request, "added_since", toString(bookmarkFilter.getAddedSince()));
+        addParam(request, "added_until", toString(bookmarkFilter.getAddedUntil()));
+
+        addParam(request, "opened_since", toString(bookmarkFilter.getOpenedSince()));
+        addParam(request, "opened_until", toString(bookmarkFilter.getOpenedUntil()));
+
+        addParam(request, "archived_since", toString(bookmarkFilter.getArchivedSince()));
+        addParam(request, "archived_until", toString(bookmarkFilter.getArchivedUntil()));
+
+        addParam(request, "favorited_since", toString(bookmarkFilter.getFavoritedSince()));
+        addParam(request, "favorited_until", toString(bookmarkFilter.getFavoritedUntil()));
+
+        addParam(request, "updated_since", toString(bookmarkFilter.getUpdatedSince()));
+        addParam(request, "updated_until", toString(bookmarkFilter.getUpdatedUntil()));
 
         Response response = readability.executeRequest(request);
 
@@ -70,8 +93,51 @@ public class BookmarksServiceImpl implements BookmarksService {
         return responseParser.parse(reader, BookmarksResponse.class);
     }
 
+    private String toString(Date addedSince) {
+        if (null == addedSince) {
+            return null;
+        }
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(addedSince);
+    }
+
+    private String toString(Integer page) {
+        if (null == page) {
+            return null;
+        }
+        return String.valueOf(page);
+    }
+
+    private String toEncodedString(String[] tags) {
+        if (null == tags || tags.length == 0) {
+            return null;
+        }
+        StringBuilder result = new StringBuilder();
+        for (String tag : tags) {
+            result.append(tag);
+            result.append(',');
+        }
+        // cut last comma.
+        result.setLength(result.length() - 1);
+        String resultStr = result.toString();
+        try {
+            return java.net.URLEncoder.encode(resultStr, "US-ASCII");
+        } catch (UnsupportedEncodingException e) {
+            // should not happen.
+            return resultStr;
+        }
+    }
+
+    private void addParam(OAuthRequest request, String name, String value) {
+        if (null != value) {
+            request.addQuerystringParameter(name, value);
+        }
+    }
+
     private String toIntegerStr(Boolean toConvert) {
-        return (toConvert == null || !toConvert) ? "0" : "1";
+        if (null == toConvert) {
+            return null;
+        }
+        return (toConvert) ? "1" : "0";
     }
 
     public Bookmark getBookmark(Long bookmarkId) throws IOException {
